@@ -15,6 +15,10 @@ echo "Todo: Add script to automatically download input.txt"
 cargo new --bin $1
 
 code=$(cat <<END
+fn parse_input(input: &str) {
+
+}
+
 fn part1(input: &str) {
 
 }
@@ -33,5 +37,9 @@ END
 )
 
 echo "$code" > ./$1/src/main.rs
+
+if [[ -e "./get_input.sh" ]]; then
+    ./get_input.sh $1
+fi
 
 
