@@ -16,11 +16,7 @@ fn check_horizontal(inp: &Vec<Vec<char>>, row: usize, col: usize) -> u64 {
 
     let check: String = (col..col + 4).map(|c| inp[row][c]).collect();
 
-    if check == search || check == search2 {
-        1
-    } else {
-        0
-    }
+    (check == search || check == search2) as u64
 }
 
 fn check_vertical(inp: &Vec<Vec<char>>, row: usize, col: usize) -> u64 {
@@ -30,11 +26,7 @@ fn check_vertical(inp: &Vec<Vec<char>>, row: usize, col: usize) -> u64 {
 
     let check: String = (row..row + 4).map(|r| inp[r][col]).collect();
 
-    if check == search || check == search2 {
-        1
-    } else {
-        0
-    }
+    (check == search || check == search2) as u64
 }
 
 fn check_diagonal(inp: &Vec<Vec<char>>, row: usize, col: usize) -> u64 {
@@ -67,9 +59,7 @@ fn part1(input: &str) {
     for row in 0..parsed[0].len() {
         for col in 0..parsed.len() {
             cnt += check_diagonal(&parsed, row, col);
-
             cnt += check_horizontal(&parsed, row, col);
-
             cnt += check_vertical(&parsed, row, col);
         }
     }

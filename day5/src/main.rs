@@ -79,20 +79,18 @@ fn part2(input: &str) {
     }
 
     let mut corrected_rules = Vec::new();
-    for update in incorrect_updates {
-        let mut _rules = rules.clone();
-
+    for mut update in incorrect_updates {
         let mut corrected_rule = Vec::new();
-        for i in 0..update.len() {
-            if let Some(val) = update.iter().find(|page| {
-                !_rules
+        while !update.is_empty() {
+            if let Some(&val) = update.iter().find(|page| {
+                !rules
                     .get(page)
                     .unwrap()
                     .iter()
                     .any(|num| update.contains(num))
             }) {
-                corrected_rule.push(*val);
-                _rules.values_mut().for_each(|x| x.retain(|e| e != val));
+                corrected_rule.push(val);
+                update.retain(|&x| x != val);
             } else {
                 panic!("Cant find next correct val");
             }
