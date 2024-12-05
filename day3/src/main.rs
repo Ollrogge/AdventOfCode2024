@@ -27,9 +27,9 @@ fn parse_input(input: &str) -> Vec<Token> {
 }
 
 fn part1(input: &str) {
-    let nums = parse_input(input);
+    let tokens = parse_input(input);
     let mut res = 0x0;
-    for token in nums.iter() {
+    for token in tokens.iter() {
         match token {
             Token::Mul(n1, n2) => res += n1 * n2,
             _ => (),
@@ -40,10 +40,10 @@ fn part1(input: &str) {
 }
 
 fn part2(input: &str) {
-    let nums = parse_input(input);
+    let tokens = parse_input(input);
     let mut res = 0x0;
     let mut is_enabled = true;
-    for token in nums.iter() {
+    for token in tokens.iter() {
         match token {
             Token::Do => is_enabled = true,
             Token::Mul(n1, n2) => {
