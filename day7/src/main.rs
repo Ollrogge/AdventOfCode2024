@@ -1,4 +1,3 @@
-use core::num;
 use regex::Regex;
 use std::vec::Vec;
 
@@ -6,13 +5,13 @@ fn parse_input(input: &str) -> Vec<(u64, Vec<u64>)> {
     let re = Regex::new(r"\d+").unwrap();
     input
         .lines()
-        .filter_map(|l| {
+        .map(|l| {
             let numbers: Vec<u64> = re
                 .find_iter(l)
                 .map(|l| l.as_str().parse::<u64>().unwrap())
                 .collect();
 
-            Some((numbers[0], numbers[1..].to_vec()))
+            (numbers[0], numbers[1..].to_vec())
         })
         .collect()
 }
