@@ -82,7 +82,10 @@ fn part2(input: &str) {
     for mut update in incorrect_updates {
         let mut corrected_rule = Vec::new();
         while !update.is_empty() {
+            // do a topological sort kind of approach
+            // => always search for the next page that has no dependencies
             if let Some(&val) = update.iter().find(|page| {
+                // if page has no dependency with the numbers left in the update, then pick that page next
                 !rules
                     .get(page)
                     .unwrap()

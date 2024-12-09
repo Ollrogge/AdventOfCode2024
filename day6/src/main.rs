@@ -93,6 +93,7 @@ fn part2(input: &str) {
             grid[i][j] = '#';
             let mut steps = 0x0;
             // max steps in grid without loop must be < row_len * col_len
+            // other way to detect loop: make hashset with (dir, pos) and check if already in set. If it is we are in a loop
             while steps < grid.len() * grid[0].len() {
                 let new_pos = add(cur_pos, cur_dir);
 
