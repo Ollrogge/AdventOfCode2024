@@ -69,7 +69,72 @@ fn part1(input: &str) {
     println!("{}", res);
 }
 
-fn part2(input: &str) {}
+fn get_entropy(grid: &Vec<Vec<char>>, pos: (i64, i64)) -> u64 {
+    let mut cnt = 0x0;
+    for i in -1..=1 {
+        for j in -1..=1 {
+            if grid[(pos.1 + i).rem_euclid(HEIGHT) as usize][(pos.0 + j).rem_euclid(WIDTH) as usize]
+                == '#'
+            {
+                cnt += 1;
+            }
+        }
+    }
+    cnt
+}
+
+fn print_tree(input: &str, steps: i64) {
+    let mut robots = parse_input(input);
+    robots.iter_mut().for_each(|r| {
+        r.pos.0 = (r.pos.0 + r.vel.0 * steps).rem_euclid(WIDTH);
+        r.pos.1 = (r.pos.1 + r.vel.1 * steps).rem_euclid(HEIGHT);
+    });
+
+    let mut grid: Vec<Vec<char>> = vec![vec!['.'; WIDTH as usize]; HEIGHT as usize];
+
+    robots
+        .iter()
+        .for_each(|r| grid[r.pos.1 as usize][r.pos.0 as usize] = '#');
+
+    for row in 0..HEIGHT {
+        for col in 0..WIDTH {
+            print!("{}", grid[row as usize][col as usize]);
+        }
+        println!("");
+    }
+}
+
+fn part2(input: &str) {
+    let mut robots = parse_input(input);
+    let mut grid: Vec<Vec<char>> = vec![vec!['.'; WIDTH as usize]; HEIGHT as usize];
+
+    robots
+        .iter()
+        .for_each(|r| grid[r.pos.1 as usize][r.pos.0 as usize] = '#');
+
+    let mut max_entropy = 0x0;
+    let mut steps = 0x0;
+    // assumption: christmas tree has a lot of robots close to each other, so the entropy is very high of the picture
+    for i in 0..WIDTH * HEIGHT {
+        for r in robots.iter_mut() {
+            grid[r.pos.1 as usize][r.pos.0 as usize] = '.';
+            r.pos.0 = (r.pos.0 + r.vel.0).rem_euclid(WIDTH);
+            r.pos.1 = (r.pos.1 + r.vel.1).rem_euclid(HEIGHT);
+            grid[r.pos.1 as usize][r.pos.0 as usize] = '#';
+        }
+
+        let sum: u64 = robots.iter().map(|r| get_entropy(&grid, r.pos)).sum();
+
+        if sum > max_entropy {
+            max_entropy = sum;
+            steps = i;
+        }
+    }
+
+    print_tree(input, steps + 1);
+
+    println!("Steps: {}", steps + 1);
+}
 
 fn main() {
     let input = include_str!("../input.txt");
