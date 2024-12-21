@@ -6,10 +6,6 @@ const RIGHT: (isize, isize) = (0, 1);
 const DOWN: (isize, isize) = (1, 0);
 const LEFT: (isize, isize) = (0, -1);
 
-fn in_grid_bounds(g: &Vec<Vec<char>>, p: (isize, isize)) -> bool {
-    p.0 >= 0 && p.0 < g.len() as isize && p.1 >= 0 && p.1 < g[0].len() as isize
-}
-
 fn parse_input(input: &str) -> ((isize, isize), Vec<Vec<char>>) {
     let grid: Vec<Vec<char>> = input.lines().map(|l| l.chars().collect()).collect();
 
@@ -72,7 +68,7 @@ fn solve(input: &str) {
         // definitely cant save 100 steps if pos2 isn't at least 100 steps away
         for (idx2, pos2) in full_path.iter().enumerate().skip(100) {
             let d = manhattan_distance(pos1, pos2);
-            // steps saves = original path - the shorter path
+            // steps saved = original path - the shorter path
             let steps_saved = idx2 as isize - idx1 as isize - d;
             if d <= 2 && steps_saved >= 100 {
                 res1 += 1;
