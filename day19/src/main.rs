@@ -1,9 +1,8 @@
-use std::collections::HashSet;
 use std::vec::Vec;
 
-fn parse_input(input: &str) -> (Vec<&str>, HashSet<&str>) {
+fn parse_input(input: &str) -> (Vec<&str>, Vec<&str>) {
     let s = input.split("\n\n").collect::<Vec<&str>>();
-    let patterns: HashSet<&str> = s[0].split(",").map(|p| p.trim()).collect();
+    let patterns: Vec<&str> = s[0].split(",").map(|p| p.trim()).collect();
 
     let flags = s[1].lines().collect();
 
